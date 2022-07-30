@@ -26,11 +26,7 @@ unsigned int escenario = 1;
  float acumulador = 1.0f;
 
 int main(){ 
-    // glm::mat4 trans = glm::mat4(1.0f);
-    // trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));  
-    // trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-    // trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-    
+        
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -76,19 +72,19 @@ unsigned int indices_cuadrado[] = {  // note that we start from 0!
 
 float vertices_pentagono[] = {
     // positions          // colors           
-     0.3f,  -0.41f, 0.0f,   0.68f, 0.37f, 0.10f,  // top right 
-     0.0f, 0.0f, 0.0f,   0.68f, 0.37f, 0.10f,  // bottom right
-    -0.3f,  -0.41f, 0.0f,   0.68f, 0.37f, 0.10f,  // bottom left
-    -0.49f,  0.16f, 0.0f,   0.68f, 0.37f, 0.10f,   // top left 
-     0.0f,  0.51f, 0.0f,   0.68f, 0.37f, 0.10f,   // top left 
-     0.49f,  0.16f, 0.0f,   0.68f, 0.37f, 0.10f,   // top left 
+     0.3f,  -0.41f, 0.0f,   0.68f, 0.37f, 0.10f,  
+     0.0f, 0.0f, 0.0f,   0.68f, 0.37f, 0.10f,  
+    -0.3f,  -0.41f, 0.0f,   0.68f, 0.37f, 0.10f,  
+    -0.49f,  0.16f, 0.0f,   0.68f, 0.37f, 0.10f,   
+     0.0f,  0.51f, 0.0f,   0.68f, 0.37f, 0.10f,   
+     0.49f,  0.16f, 0.0f,   0.68f, 0.37f, 0.10f,   
 }; 
 unsigned int indices_pentagono[] = {  // note that we start from 0!
     0, 1, 2,   // first triangle
     2, 1, 3,    // second triangle
-    3, 1, 4,    // second triangle
-    4, 1, 5,    // second triangle
-    5, 1, 0    // second triangle
+    3, 1, 4,    // third triangle
+    4, 1, 5,    // fourth triangle
+    5, 1, 0    // fifth triangle
 };
 
     unsigned int cuadrado_vao;
@@ -157,7 +153,6 @@ unsigned int indices_pentagono[] = {  // note that we start from 0!
         glm::mat4 projection    = glm::mat4(1.0f);
 
         view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-        // note that we're translating the scene in the reverse direction of where we want to move
         projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 5.0f);
         unsigned int viewLoc  = glGetUniformLocation(ourShader.ID, "view");
         unsigned int projectionLoc  = glGetUniformLocation(ourShader.ID, "projection");
