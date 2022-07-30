@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "glad.c": "cpp",
+        "iostream": "cpp",
+        "algorithm": "cpp",
+        "xiosbase": "cpp",
+        "xlocale": "cpp",
+        "xutility": "cpp",
+        "cmath": "cpp"
+    }
+}
