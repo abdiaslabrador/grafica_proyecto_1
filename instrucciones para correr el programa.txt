@@ -7,4 +7,6 @@ b) En caso de compilar y ejecutar el programa en windows:
     2- Una vez cerrada el cmd, ejecutar el main.exe que se acaba de generar
 
 c) En caso de compilar el y ejecutar el programa en linux:
-    No lo sé, tendrias que investigar como hacerlo en linux
+    1- Abrir el terminal, ir a la dirección del proyecto y ejecutar este comando para compilar el main.cpp 
+    "g++ -o main main.cpp -I glad/include -Lglad/lib  -lglfw3dll -lopengl32" (sin comillas)
+    2- Una vez compilado el programa correr el ejectable generado
