@@ -4,7 +4,7 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <glad/glad.c>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 #include <shaderClass/shaderClass.h>
 
 #include <glm/glm.hpp>
