@@ -8,6 +8,6 @@ b) En caso de compilar y ejecutar el programa en windows:
 
 c) En caso de compilar el y ejecutar el programa en linux:
     1- Abrir el terminal, ir a la dirección del proyecto y ejecutar este comando para compilar el main.cpp 
-    "g++ main.cpp -lGL -lglfw -I glad/include/" en caso de no servir este
+    "g++ -o main main.cpp -I glad/include  -lglfw -lGL" en caso de no servir este
     "g++ -o main main.cpp -I glad/include -Lglad/lib  -lglfw3dll -lopengl32" (sin comillas)
     2- Una vez compilado el programa correr el ejectable generado
