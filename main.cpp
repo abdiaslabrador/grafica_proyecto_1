@@ -1,4 +1,5 @@
 // scaling operations, then rotations and lastly translations 
+//Remember that the actual transformation order should be read in reverse: even though in code we first translate and then later rotate, the actual transformations first apply a rotation and then a translation.
 #define GLFW_INCLUDE_NONE
 #define STB_IMAGE_IMPLEMENTATION
 #include <iostream>
@@ -21,9 +22,7 @@ void processInput(GLFWwindow *window);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void check_shader_compile_status(int vertexShader);
 unsigned int escenario = 1;
- float x = 0.0f;
- float y = 0.0f;
- float acumulador = 1.0f;
+float acumulador = 1.0f; //el acumulador controla la velocidad del giro alrededor del pentagono en la 3ra escena
 
 int main(){ 
         
@@ -65,7 +64,7 @@ float vertices_cuadrado[] = {
     -0.5f, -0.5f, 0.0f,   0.68f, 0.37f, 0.10f,  // bottom left
     -0.5f,  0.5f, 0.0f,   0.68f, 0.37f, 0.10f   // top left 
 }; 
-unsigned int indices_cuadrado[] = {  // note that we start from 0!
+unsigned int indices_cuadrado[] = {  
     0, 1, 3,   // first triangle
     1, 2, 3    // second triangle
 };   
@@ -79,7 +78,7 @@ float vertices_pentagono[] = {
      0.0f,  0.51f, 0.0f,   0.68f, 0.37f, 0.10f,   
      0.49f,  0.16f, 0.0f,   0.68f, 0.37f, 0.10f,   
 }; 
-unsigned int indices_pentagono[] = {  // note that we start from 0!
+unsigned int indices_pentagono[] = {  
     0, 1, 2,   // first triangle
     2, 1, 3,    // second triangle
     3, 1, 4,    // third triangle
@@ -152,7 +151,16 @@ unsigned int indices_pentagono[] = {  // note that we start from 0!
         glm::mat4 view          = glm::mat4(1.0f);
         glm::mat4 projection    = glm::mat4(1.0f);
 
+        /*
+        El espacio de vista es el resultado de transformar las coordenadas 
+        del espacio mundial (model) en coordenadas que están frente a la vista 
+        del usuario. El espacio de la vista es, por lo tanto, el espacio 
+        visto desde el punto de vista de la cámara. 
+        */
         view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        /* proyección se encarga de pasar las coordenas del mundo global a 
+         coordenadas con el rango de -1 a 1
+        */
         projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 5.0f);
         unsigned int viewLoc  = glGetUniformLocation(ourShader.ID, "view");
         unsigned int projectionLoc  = glGetUniformLocation(ourShader.ID, "projection");
@@ -216,12 +224,17 @@ void tercera_escena(unsigned int *transformLoc, unsigned int *pentagono_vao, uns
 
         glBindVertexArray(*triangulo_vao);
         glm::mat4 trans = glm::mat4(1.0f);
-        x = (cos(acumulador ) * 0.7);
-        y = (sin(acumulador ) * 0.7);
-        if(acumulador >6.28 )
+        const float radius =  0.7f;
+        // const float x = sin(glfwGetTime()) * radius; también sirve así, pero no se tiene dominio de la velocidad del giro
+        // const float y = cos(glfwGetTime()) * radius; también sirve así, pero no se tiene dominio de la velocidad del giro
+        const float x = (cos(acumulador ) * radius); // el 0.7 es el rango del diametro 
+        const float y = (sin(acumulador ) * radius);
+
+        //el acumulador controla la velocidad del giro alrededor del pentagono
+        if(acumulador >6.28 ) //2pi
             acumulador =0.00000;
         else
-            acumulador +=0.001;
+            acumulador +=0.001; //mientras más pequeño es el valor más lento es el  proceso de giro alrededor del pentagono
 
         trans = glm::translate(trans, glm::vec3(x, y, 0.0f));
         trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
